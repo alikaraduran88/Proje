@@ -37,8 +37,10 @@ namespace WindowsFormsApplication1
 
             if(AlgoritmaTur.SelectedIndex == 0)
             {
+                //Helper.embedText(mesaj.Text, bmp);
                 Steganography.embedText(mesaj.Text, bmp);
-                Steganography.extractText(bmp);
+                
+              //  Steganography.extractText(bmp);
             }else if(AlgoritmaTur.SelectedIndex == 1)
             {
 
@@ -47,6 +49,10 @@ namespace WindowsFormsApplication1
             
         }
 
-        
+        private void Decorator_Click(object sender, EventArgs e)
+        {
+            bmp = (Bitmap)pictureBox1.Image;
+            Steganography.extractText(bmp);
+        }
     }
 }

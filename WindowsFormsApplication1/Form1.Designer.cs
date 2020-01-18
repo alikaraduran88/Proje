@@ -35,6 +35,7 @@
             this.M_sifrele = new System.Windows.Forms.Button();
             this.AlgoritmaTur = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.Decorator = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +76,7 @@
             // 
             // M_sifrele
             // 
-            this.M_sifrele.Location = new System.Drawing.Point(333, 327);
+            this.M_sifrele.Location = new System.Drawing.Point(204, 317);
             this.M_sifrele.Name = "M_sifrele";
             this.M_sifrele.Size = new System.Drawing.Size(75, 23);
             this.M_sifrele.TabIndex = 4;
@@ -103,11 +104,22 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Algoritma Türü";
             // 
+            // Decorator
+            // 
+            this.Decorator.Location = new System.Drawing.Point(323, 317);
+            this.Decorator.Name = "Decorator";
+            this.Decorator.Size = new System.Drawing.Size(75, 23);
+            this.Decorator.TabIndex = 7;
+            this.Decorator.Text = "Şifre çözme";
+            this.Decorator.UseVisualStyleBackColor = true;
+            this.Decorator.Click += new System.EventHandler(this.Decorator_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(614, 403);
+            this.Controls.Add(this.Decorator);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.AlgoritmaTur);
             this.Controls.Add(this.M_sifrele);
@@ -133,6 +145,7 @@
         private System.Windows.Forms.Button M_sifrele;
         private System.Windows.Forms.ComboBox AlgoritmaTur;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button Decorator;
     }
 }
 

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-   public class Steganography
+    public class Helper
     {
-
         public static Bitmap embedText(string text, Bitmap bmp)
         {
 
@@ -28,70 +27,56 @@ namespace WindowsFormsApplication1
             // pass through the rows
             for (int i = 0; i < bmp.Height; i++)
             {
-                // pass through each column
+                // pass through each row
                 for (int j = 0; j < bmp.Width; j++)
                 {
                     // check if all characters has been hidden
                     if (charIndex >= text.Length)
                         return bmp;
 
+                    // holds the pixel that is currently being processed
+                    Color pixel = bmp.GetPixel(j, i);
 
+                    // now, clear the least significant bit (LSB) from each pixel element
+                    R = pixel.R - pixel.R % 2;
+                    G = pixel.G - pixel.G % 2;
+                    B = pixel.B - pixel.B % 2;
 
                     pixelElementIndex = 0;
-                    // move to the next character and process again
-                    charValue = text[charIndex++];
 
-                    // for each byte use (RGB)- 3 bytes for each character
-                    for (int k = 0; k < 3; k++)
+                    // for each pixel, pass through its elements (RGB)
+                    for (int n = 0; n < 3; n++)
                     {
+                        // check if new 8 bits has been processed
+                        if (pixelElementIndex == 8) break;
+                        // move to the next character and process again
+                        charValue = text[charIndex++];
 
-                        // holds the pixel that is currently being processed
-                        if (j + 1 < bmp.Width)
+                        // check which pixel element has the turn to hide a bit in its LSB
+                        switch (pixelElementIndex % 3)
                         {
-                            i++;
-                           // j = 0;
-                        }
-                        else
-                        {
-                            j++;
-                        }
-                        Color pixel = bmp.GetPixel(j, i-1);
-
-                        // now, clear the least significant bit (LSB) from each pixel element
-                        R = pixel.R - pixel.R % 2;
-                        G = pixel.G - pixel.G % 2;
-                        B = pixel.B - pixel.B % 2;
-
-                        // for each pixel, pass through its elements (RGB)     
-                        for (int n = 0; n < 3; n++)
-                        {
-                            // check if new 8 bits has been processed
-                            if (pixelElementIndex == 8) break;
-
-                            // check which pixel element has the turn to hide a bit in its LSB
-                            switch (pixelElementIndex % 3)
-                            {
-                                case 0:
-                                    R += charValue % 2;
-                                    charValue /= 2;
-                                    break;
-                                case 1:
-                                    G += charValue % 2;
-                                    charValue /= 2;
-                                    break;
-                                case 2:
-                                    B += charValue % 2;
-                                    charValue /= 2;
-                                    break;
-                            }
-
-                            pixelElementIndex++;
+                            case 0:
+                                R += charValue % 2;
+                                charValue /= 2;
+                                break;
+                            case 1:
+                                G += charValue % 2;
+                                charValue /= 2;
+                                break;
+                            case 2:
+                                B += charValue % 2;
+                                charValue /= 2;
+                                break;
                         }
                         bmp.SetPixel(j, i, Color.FromArgb(R, G, B));
+
+                        pixelElementIndex++;
+
+
                     }
                 }
             }
-            
+
             return bmp;
         }
 
@@ -109,7 +94,7 @@ namespace WindowsFormsApplication1
                 // pass through each row
                 for (int j = 0; j < bmp.Width; j++)
                 {
-                    Color pixel = bmp.GetPixel(i, j);
+                    Color pixel = bmp.GetPixel(j, i);
 
                     // for each pixel, pass through its elements (RGB)
                     for (int n = 0; n < 3; n++)
@@ -169,12 +154,13 @@ namespace WindowsFormsApplication1
         {
             int result = 0;
 
-            for (int m = 0; m < 1; m++)
+            for (int i = 0; i < 8; i++)
             {
                 result = result * 2 + n % 2;
 
                 n /= 2;
             }
+
             return result;
         }
     }
